@@ -41,17 +41,7 @@
     </div>
     <div
       class="d-flex justify-content-center align-items-center position-fixed top-0 w-100 h-100">
-      <!-- <button @click="counterUp"
-        class="btn btn-success">Go Up</button>
-      <span class="mx-5">{{ counter }}</span>
-      <button @click="counterDown"
-        class="btn btn-danger">Go Down</button> -->
-
-      <button @click="counter++"
-        class="btn btn-success">Go Up</button>
-      <span class="mx-5">{{ counter }}</span>
-      <button @click="counter--"
-        class="btn btn-danger">Go Down</button>
+      <span class="mx-5 h1" style="letter-spacing: 10px;">{{ time }}</span>
     </div>
   </div>
 
@@ -61,14 +51,25 @@
 
     createApp({
       setup() {
-        const counter = ref(0);
+        const time = ref(getTime());
         const show = ref(true);
 
+        function start() {
+          setInterval(() => {
+            time.value = getTime();
+          }, 1000)
+        }
+
+        function getTime() {
+          const today = new Date();
+          return today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+        }
+
         onMounted(() => {
+          start()
           show.value = false;
         });
-
-        return { counter, show };
+        return { time, show, start };
       },
     }).mount("#root");
   </script>
