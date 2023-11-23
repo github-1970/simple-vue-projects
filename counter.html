@@ -27,7 +27,7 @@
       color: black;
     }
   </style>
-  <title>Document</title>
+  <title>Counter</title>
 </head>
 
 <body>
@@ -41,33 +41,34 @@
     </div>
     <div
       class="d-flex justify-content-center align-items-center position-fixed top-0 w-100 h-100">
-      <button @click="counterUp"
+      <!-- <button @click="counterUp"
         class="btn btn-success">Go Up</button>
       <span class="mx-5">{{ counter }}</span>
       <button @click="counterDown"
+        class="btn btn-danger">Go Down</button> -->
+
+      <button @click="counter++"
+        class="btn btn-success">Go Up</button>
+      <span class="mx-5">{{ counter }}</span>
+      <button @click="counter--"
         class="btn btn-danger">Go Down</button>
     </div>
   </div>
 
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script>
-    Vue.createApp({
-      data() {
-        return {
-          counter: 1,
-          show: true,
-        };
-      },
-      methods: {
-        counterUp() {
-          this.counter++;
-        },
-        counterDown() {
-          this.counter--;
-        },
-      },
-      mounted() {
-        this.show = false;
+    const { createApp, ref, onMounted } = Vue;
+
+    createApp({
+      setup() {
+        onMounted(() => {
+          show.value = false;
+        });
+
+        const counter = ref(0);
+        const show = ref(true);
+
+        return { counter, show };
       },
     }).mount("#root");
   </script>
