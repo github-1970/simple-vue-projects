@@ -28,7 +28,7 @@
     }
 
     .modal {
-      /* display: none; */
+      display: block;
       transition: all .3s ease-in-out;
       position: fixed;
       z-index: 1;
@@ -84,12 +84,12 @@
 
     <div
       class="d-flex justify-content-center align-items-center flex-column position-fixed top-0 w-100 h-100">
-      <button class="btn btn-success" @click="style.display='block';">Open Modal</button>
+      <button class="btn btn-success" @click="showModal = true">Open Modal</button>
 
-      <div :style="style" class="modal">
-        <div class="modal-content pt-4">
+      <div v-if="showModal" class="modal" @click="showModal = false">
+        <div class="modal-content pt-4" @click.stop>
           <span class="close">
-            <span class="close-btn" @click="style.display='none';">&times;</span>
+            <span class="close-btn" @click="showModal = false">&times;</span>
           </span>
           <h2>Modal title</h2>
           <p class="mt-3">Modal content...</p>
@@ -105,14 +105,13 @@
     createApp({
       setup() {
         const show = ref(true);
-        const modal = ref(false);
-        const style = ref({display: 'none'})
+        const showModal = ref(false);
 
         onMounted(() => {
           show.value = false;
         });
 
-        return { show, modal, style };
+        return { show, showModal };
       },
     }).mount("#root");
   </script>
